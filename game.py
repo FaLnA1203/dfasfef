@@ -36,7 +36,7 @@ def map_sprites(*surfaces):
             sprite.image = surface
             sprite.rect = surface.get_rect()
             yield sprite
-            
+
     return list(yeilder())
 
 def map_single_sprite(surface): return map_sprites(surface)[0]
@@ -72,8 +72,8 @@ run_1 = True
 run_2 = False
 animcount = 0
 bullets = []
-entities = pygame.sprite.Group() # Все объекты
-platforms = [] # то, во что мы будем врезаться или опираться
+entities = pygame.sprite.Group()
+platforms = []
 level = [
        "-------------------------",
        "-                       -",
@@ -94,10 +94,10 @@ level = [
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self) # changed from "sprite.Sprite.__init__" to "pygame.sprite.Sprite.__init__"
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((PLATFORM_WIDTH, PLATFORM_HEIGHT))
-        self.image.fill(pygame.Color(PLATFORM_COLOR)) # changed from "Color" to "pygame.Color"
-        self.rect = pygame.Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT) # changed from "Rect" to "pygame.Rect"
+        self.image.fill(pygame.Color(PLATFORM_COLOR))
+        self.rect = pygame.Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 
 class silk(pygame.sprite.Sprite):
     def __init__(self, x, y, width_1, height_1, color, facing):
@@ -120,35 +120,35 @@ def drawwin():
         win.blit(menu, (0, 0))
     if run_2:
         win.blit(bg, (0, 0))
-
+        entities.draw(win)
         if animcount + 1 >= 30:
             animcount = 0
         if idle_2 and jump:
             win.blit(jumpLeft[animcount // 5], (x, y))
-            entities.add(jumpLeft_sprite) # changed
+            entities.add(jumpLeft_sprite)
             animcount += 1
         elif idle_1 and jump:
             win.blit(jumpRight[animcount // 5], (x, y))
-            entities.add(jumpRight_sprite) # changed
+            entities.add(jumpRight_sprite)
             animcount += 1
         elif left:
             win.blit(walkLeft[animcount // 8], (x, y))
-            entities.add(walkLeft_sprite) # changed
+            entities.add(walkLeft_sprite)
             animcount += 1
         elif right:
             win.blit(walkRight[animcount // 8], (x, y))
-            entities.add(walkRight_sprite) # changed
+            entities.add(walkRight_sprite)
             animcount += 1
         else:
             if idle_2:
                 win.blit(playerStand_2, (x, y))
-                entities.add(playerStand_2_sprite) # changed
+                entities.add(playerStand_2_sprite)
             elif idle_1:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1_sprite) # changed
+                entities.add(playerStand_1_sprite)
             else:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1_sprite) # changed
+                entities.add(playerStand_1_sprite)
         x_1=y_1=0
         for row in level:
             for col in row:
@@ -177,7 +177,6 @@ while run_1:
 
 while run_2:
     clock.tick(30)
-
 
     for game in pygame.event.get():
         if game.type == pygame.QUIT:
