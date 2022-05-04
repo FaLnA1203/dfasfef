@@ -29,6 +29,28 @@ bg = pygame.image.load('bg.png')
 playerStand_1 = pygame.image.load('idle_right.png')
 playerStand_2 = pygame.image.load('idle_left.png')
 
+def map_sprites(*surfaces):
+    def yeilder():
+        for surface in surfaces:
+            sprite = pygame.sprite.Sprite()
+            sprite.image = surface
+            sprite.rect = surface.get_rect()
+            yield sprite
+            
+    return list(yeilder())
+
+def map_single_sprite(surface): return map_sprites(surface)[0]
+
+walkRight_sprite = map_sprites(*walkRight)
+walkLeft_sprite = map_sprites(*walkLeft)
+jumpLeft_sprite = map_sprites(*jumpLeft)
+jumpRight_sprite = map_sprites(*jumpRight)
+platform_1_sprite = map_single_sprite(platform_1)
+menu_sprite = map_single_sprite(menu)
+bg_sprite = map_single_sprite(bg)
+playerStand_1_sprite = map_single_sprite(playerStand_1)
+playerStand_2_sprite = map_single_sprite(playerStand_2)
+
 clock = pygame.time.Clock()
 
 x = 500
@@ -72,10 +94,10 @@ level = [
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self) # changed from "sprite.Sprite.__init__" to "pygame.sprite.Sprite.__init__"
         self.image = pygame.Surface((PLATFORM_WIDTH, PLATFORM_HEIGHT))
-        self.image.fill(Color(PLATFORM_COLOR))
-        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
+        self.image.fill(pygame.Color(PLATFORM_COLOR)) # changed from "Color" to "pygame.Color"
+        self.rect = pygame.Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT) # changed from "Rect" to "pygame.Rect"
 
 class silk(pygame.sprite.Sprite):
     def __init__(self, x, y, width_1, height_1, color, facing):
@@ -103,30 +125,30 @@ def drawwin():
             animcount = 0
         if idle_2 and jump:
             win.blit(jumpLeft[animcount // 5], (x, y))
-            entities.add(jumpLeft)
+            entities.add(jumpLeft_sprite) # changed
             animcount += 1
         elif idle_1 and jump:
             win.blit(jumpRight[animcount // 5], (x, y))
-            entities.add(jumpRight)
+            entities.add(jumpRight_sprite) # changed
             animcount += 1
         elif left:
             win.blit(walkLeft[animcount // 8], (x, y))
-            entities.add(walkLeft)
+            entities.add(walkLeft_sprite) # changed
             animcount += 1
         elif right:
             win.blit(walkRight[animcount // 8], (x, y))
-            entities.add(walkRight)
+            entities.add(walkRight_sprite) # changed
             animcount += 1
         else:
             if idle_2:
                 win.blit(playerStand_2, (x, y))
-                entities.add(playerStand_2)
+                entities.add(playerStand_2_sprite) # changed
             elif idle_1:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1)
+                entities.add(playerStand_1_sprite) # changed
             else:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1)
+                entities.add(playerStand_1_sprite) # changed
         x_1=y_1=0
         for row in level:
             for col in row:
@@ -176,6 +198,8 @@ while run_2:
         if len(bullets) < 10:
             bullets.append(silk(round(x + width // 2), round(y + height // 2), 40, 2, (255, 255, 255), facing))
 
+    # откуда что и где
+    """
     for p in platforms:
         if sprite.collide_rect(self, p):
 
@@ -192,6 +216,7 @@ while run_2:
             if yvel < 0:
                 self.rect.top = p.rect.bottom
                 self.yvel = 0
+    """
 
     if keys[pygame.K_a] and x > 5:
         x -= speed
