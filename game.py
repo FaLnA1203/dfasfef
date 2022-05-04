@@ -120,7 +120,7 @@ def drawwin():
         win.blit(menu, (0, 0))
     if run_2:
         win.blit(bg, (0, 0))
-        win.blit(pf,(x,y))
+
         entities.draw(win)
         if animcount + 1 >= 30:
             animcount = 0
@@ -157,12 +157,12 @@ def drawwin():
                     pf = Platform(x,y)
                     entities.add(pf)
                     platforms.append(pf)
+                    win.blit(pf,(x,y))
                 x_1 += PLATFORM_WIDTH
             y_1 += PLATFORM_HEIGHT
             x_1 = 0
         for bullet in bullets:
             bullet.draw(win)
-
     pygame.display.update()
 
 while run_1:
