@@ -120,6 +120,7 @@ def drawwin():
         win.blit(menu, (0, 0))
     if run_2:
         win.blit(bg, (0, 0))
+        win.blit(pf,(x,y))
         entities.draw(win)
         if animcount + 1 >= 30:
             animcount = 0
