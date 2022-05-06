@@ -12,6 +12,7 @@ win_width = 1000
 win_height = 1000
 
 win = pygame.display.set_mode((win_width, win_height))
+win = pygame.transform.scale(win, (1000, 1000))
 pygame.display.set_caption('game')
 
 tile_size = 50
@@ -229,7 +230,8 @@ class World():
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('spide.png')
+        self.image = pygame.image.load('spider.png')
+        self.image = pygame.transform.scale('spider.png', (46,35))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
