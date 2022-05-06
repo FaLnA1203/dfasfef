@@ -235,7 +235,6 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.move_direction = 0
         self.move_counter = 0
 
     def update(self):
