@@ -139,6 +139,10 @@ def drawwin():
                     pf = Platform(x_1,y_1)
                     entities.add(pf)
                     platforms.append(pf)
+<<<<<<< HEAD
+=======
+                    win.blit(pf.image,(x,y))
+>>>>>>> b8dbfb6e2d4417999f8b2e194ea6795c62bfb7b0
                 x_1 += PLATFORM_WIDTH
             y_1 += PLATFORM_HEIGHT
             x_1 = 0
