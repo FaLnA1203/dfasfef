@@ -41,16 +41,6 @@ def map_sprites(*surfaces):
 
 def map_single_sprite(surface): return map_sprites(surface)[0]
 
-walkRight_sprite = map_sprites(*walkRight)
-walkLeft_sprite = map_sprites(*walkLeft)
-jumpLeft_sprite = map_sprites(*jumpLeft)
-jumpRight_sprite = map_sprites(*jumpRight)
-platform_1_sprite = map_single_sprite(platform_1)
-menu_sprite = map_single_sprite(menu)
-bg_sprite = map_single_sprite(bg)
-playerStand_1_sprite = map_single_sprite(playerStand_1)
-playerStand_2_sprite = map_single_sprite(playerStand_2)
-
 clock = pygame.time.Clock()
 
 x = 500
@@ -60,7 +50,7 @@ height = 71
 PLATFORM_WIDTH = 52
 PLATFORM_HEIGHT = 45
 PLATFORM_COLOR = "#FF6262"
-speed = 5
+speed = 7
 jump = False
 jumpcount = 10
 
@@ -120,44 +110,35 @@ def drawwin():
         win.blit(menu, (0, 0))
     if run_2:
         win.blit(bg, (0, 0))
-
         entities.draw(win)
         if animcount + 1 >= 30:
             animcount = 0
         if idle_2 and jump:
             win.blit(jumpLeft[animcount // 5], (x, y))
-            entities.add(jumpLeft_sprite)
             animcount += 1
         elif idle_1 and jump:
             win.blit(jumpRight[animcount // 5], (x, y))
-            entities.add(jumpRight_sprite)
             animcount += 1
         elif left:
             win.blit(walkLeft[animcount // 8], (x, y))
-            entities.add(walkLeft_sprite)
             animcount += 1
         elif right:
             win.blit(walkRight[animcount // 8], (x, y))
-            entities.add(walkRight_sprite)
             animcount += 1
         else:
             if idle_2:
                 win.blit(playerStand_2, (x, y))
-                entities.add(playerStand_2_sprite)
             elif idle_1:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1_sprite)
             else:
                 win.blit(playerStand_1, (x, y))
-                entities.add(playerStand_1_sprite)
         x_1=y_1=0
         for row in level:
             for col in row:
                 if col == "-":
-                    pf = Platform(x,y)
+                    pf = Platform(x_1,y_1)
                     entities.add(pf)
                     platforms.append(pf)
-                    win.blit(pf,(x,y))
                 x_1 += PLATFORM_WIDTH
             y_1 += PLATFORM_HEIGHT
             x_1 = 0
